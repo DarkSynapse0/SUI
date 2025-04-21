@@ -11,7 +11,9 @@ export default function NavBar() {
     <div>
       {session ? (
         <>
-          <button className="cursor-pointer" onClick={() => signOut()}>Logout</button>
+          <button className="cursor-pointer" onClick={() => signOut()}>
+            Logout
+          </button>
         </>
       ) : (
         <p>Not signed in</p>

@@ -1,8 +1,13 @@
 import NextAuth from "next-auth";
+import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
   providers: [
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -10,26 +15,34 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { email, password } = credentials || {};
+        if (!credentials) return null;
+        const { email, password } = credentials;
 
-        // Replace this with your real backend/user validation
-        if (email === "admin@example.com" && password === "admin123") {
-          return { id: "1", name: "Admin", email: "admin@example.com" };
-        }
+        //Database lookup
+        const user = await fakeLogin(email, password);
+        if (!user) return null;
 
-        return null;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
       },
     }),
   ],
   pages: {
-    signIn: "/login", // custom login page
-  },
-  session: {
-    strategy: "jwt" as const,
+    signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-const handler = NextAuth(authOptions);
+async function fakeLogin(email: string, password: string) {
+  // 🔒 Replace this logic with real database logic
+  if (email === "zephyrx@example.com" && password === "test123") {
+    return { id: "1", name: "ZephyrX", email };
+  }
+  return null;
+}
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
