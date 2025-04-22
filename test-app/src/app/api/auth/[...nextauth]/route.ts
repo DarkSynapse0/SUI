@@ -20,13 +20,11 @@ export const authOptions = {
 
         //Database lookup
         const user = await fakeLogin(email, password);
+        console.log(user);
+      
         if (!user) return null;
 
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        };
+        return user;
       },
     }),
   ],
