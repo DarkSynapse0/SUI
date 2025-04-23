@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 import { EnokiFlowProvider } from "@mysten/enoki/react";
 import { UserProvider } from "./context/UserContext.tsx";
 
@@ -11,7 +12,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <EnokiFlowProvider apiKey={ENOKI_API_KEY}>
       <UserProvider>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </UserProvider>
     </EnokiFlowProvider>
   </React.StrictMode>

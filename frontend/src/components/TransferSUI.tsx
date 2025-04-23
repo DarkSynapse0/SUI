@@ -78,19 +78,33 @@ const TransferSUI = () => {
   }, [userDetails.address]);
 
   return (
-    <div>
-      <h3>Transfer SUI</h3>
-      <p>User Balance: {userBalance * 10 ** -9}</p>
-      <p>
-        Note: Please transfer some SUI or{" "}
-        <span
-          style={{ textDecoration: "underline", cursor: "pointer" }}
-          onClick={() => requestSUIFromFaucet(userDetails.address)}
-        >
-          request from faucet
-        </span>{" "}
-        to the address above before running the Transfer SUI action.
-      </p>
+    <section className="">
+      <div className="overview gap-5 flex flex-col p-5 m-5 border rounded-md">
+        <div className=" gap-5 w-full flex items-center justify-around flex-wrap">
+          <div className="userDetails  p-5 border">
+            <div>Address: {userDetails.address}</div>
+            <div>Provider: {userDetails.provider}</div>
+          </div>
+
+          <div className=" border flex-1  p-5">
+            <h3>Transfer SUI</h3>
+            <p>User Balance: {userBalance * 10 ** -9}</p>
+          </div>
+        </div>
+
+        <div>
+          <p>
+            <span className="font-bold">Note :</span>Please transfer some SUI or{" "}
+            <span
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() => requestSUIFromFaucet(userDetails.address)}
+            >
+              request from faucet
+            </span>{" "}
+            to the address above before running the Transfer SUI action.
+          </p>
+        </div>
+      </div>
 
       <div>
         <p>Normal Transaction</p>
@@ -106,7 +120,7 @@ const TransferSUI = () => {
         <div>{txnDigest && <div>Transaction Digest: {txnDigest}</div>}</div>
         {loading && <div>Loading...</div>}
       </div>
-    </div>
+    </section>
   );
 };
 
